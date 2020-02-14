@@ -1,0 +1,74 @@
+:source-highlighter: coderay
+
+= Kobankid know how list
+
+== zepyer on qemu
+
+=== riscv-gnu-toolchain build 
+
+----
+install directory : /usr/local/bin/qemu-riscv32
+----
+
+[source, shell]
+----
+git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+git clone https://github.com/riscv/riscv-gnu-toolchain
+cd riscv-gnu-toolchain
+git submodule update --init --recursive
+sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev
+./configure --prefix=/opt/riscv --enable-multilib
+make linux
+----
+
+=== qemu build
+
+---- 
+install directory : /usr/local/bin/qemu-riscv32
+----
+
+[source, shell]
+----
+git clone https://github.com/riscv/riscv-qemu.git
+cd riscv-qemu/
+git checkout -b riscv-qemu-4.0.0 origin/riscv-qemu-4.0.0
+mkdir build
+cd build/
+../configure --target-list=riscv64-softmmu,riscv32-softmmu,riscv64-linux-userriscv32-linux-user
+make -j8
+sudo apt install bison
+sudo make install
+----
+
+=== RISC-V Tools
+
+----
+install directory : /usr/local/riscv-tools/
+----
+
+[source, shell]
+----
+git clone https://github.com/riscv/riscv-tools.git
+cd riscv-tools/
+git submodule update --init --recursive
+export RISCV=/usr/local/riscv-tools
+sudo -E ./build.sh
+----
+
+== Terminal Command Tips
+
+=== locate command
+
+----
+Enable cache
+----
+
+[source, shell]
+----
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+----
+
+.test
+----
+code test
+----
