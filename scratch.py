@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-My Module
+This module is for creating .gitkeep in empty directories.
 """
 import subprocess
 import argparse
