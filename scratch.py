@@ -5,7 +5,7 @@ My Module
 import subprocess
 import argparse
 import os
-# import sys
+import sys
 
 def invoke_command(commands: str) -> int:
     """
@@ -30,12 +30,15 @@ def keep(args):
     keep
     """
     print('keep function is calle')
-    # command = "find %(dir)s -type d -name .git -prune -o -type d -empty -exec touch {}/%(keeper)s \;" % vars(args)
-    command = "find %(dir)s -type d -name .git -prune -o -type d -empty;" % vars(args)
-    subprocess.run(command, shell=True, check=True)
-    # print(result[1])
-    # if result[0] > 0:
-    #     sys.exit(1)
+    command = "find %(dir)s -type d -name .git -prune -o -type d -empty -exec touch {}/%(keeper)s \;" % vars(args)
+    # command = "find %(dir)s -type d -name .git -prune -o -type d -empty;" % vars(args)
+    result = subprocess.run(command, shell=True, check=True)
+    print(result)
+    print("result.returncode={0}".format(result.returncode))
+
+    if result.returncode > 0:
+        print("keeper error")
+        sys.exit(1)
 
 def main():
     """
@@ -49,15 +52,15 @@ def main():
     my_parser.set_defaults(handler=mylist)
 
     # keeper option
-    my_parser.add_argument('--keepr', type=str, \
+    my_parser.add_argument('--keeper', type=str, \
                            help='file name for gitkeep. default is ".gitkeep"', default='.gitkeep')
-    my_parser.set_defaults(func=keep)
+    my_parser.set_defaults(handler=keep)
 
-    args = my_parser.parse_args() # Analysis arguments
-    print('arg1='+args.dir)
+    # parse arguments
+    args = my_parser.parse_args()
+    print('dir={0}, keeper={1}'.format(args.dir, args.keeper))
 
     args.handler(args)
-    args.func(args)
 
 if __name__ == "__main__":
     main()
