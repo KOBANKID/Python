@@ -7,15 +7,6 @@ import argparse
 import os
 import sys
 
-def invoke_command(commands: str) -> int:
-    """
-    invoke_command
-    """
-    print(commands)
-    subprocess.run(commands, shell=True, check=True)
-
-    return 0
-
 def mylist(args):
     """
     mylist
