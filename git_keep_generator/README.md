@@ -12,7 +12,7 @@ python3 git_keep.py --dir="~/test_dir" --keeper=".gitkeep"
 ```
 
 ```sh:after
-./test_dir/
+~/test_dir/
 ├── a
 │   └── .gitkeep
 ├── b
